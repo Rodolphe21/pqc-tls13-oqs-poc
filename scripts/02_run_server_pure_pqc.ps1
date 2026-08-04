@@ -1,0 +1,2 @@
+# Launches OpenSSL TLS 1.3 Server enforcing pure PQC (ML-KEM-768)
+docker run --rm -it -p 4433:4433 -v ${PWD}:/export openquantumsafe/curl openssl s_server -accept 4433 -cert /export/server.crt -key /export/server.key -tls1_3 -www
