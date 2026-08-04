@@ -12,60 +12,6 @@ An automated, containerized Proof of Concept (PoC) environment designed to evalu
 
 Built using Docker and the Open Quantum Safe (openquantumsafe/curl) stack, this project provides step-by-step scripts to test NIST standardized algorithms (ML-KEM-768 / ML-DSA-65), BSI-recommended hybrid key exchange (X25519MLKEM768), and conservative unstructured LWE schemes (FrodoKEM).
 
----
-
-## 🏗️ Architecture Overview
-
-\`\`\`text
-  +-------------------------------------------------------------------------+
-  |                             HOST WORKSTATION                            |
-  |                                                                         |
-  |  +-------------------------------------------------------------------+  |
-  |  |                         DOCKER CONTAINER                          |  |
-  |  |                (Open Quantum Safe Provider Stack)                 |  |
-  |  |                                                                   |  |
-  |  |  +----------------------+             +------------------------+  |  |
-  |  |  |    PQC TLS SERVER    |             |     PQC TLS CLIENT     |  |  |
-  |  |  |  (OpenSSL s_server)  |             |     (curl / s_client)  |  |  |
-  |  |  +----------+-----------+             +-----------+------------+  |  |
-  |  +-------------|-------------------------------------|---------------+  |
-  |                |                                     |                  |
-  |                +------------ TCP:4433 ---------------|                  |
-  |                                 |                    |                  |
-  |                                 v                    v                  |
-  |                   +---------------------------------------+             |
-  |                   |   WIRESHARK (Npcap Loopback Capture)  |             |
-  |                   +---------------------------------------+             |
-  |                                     |                                   |
-  |                                     v                                   |
-  |                          (Decrypted via keylog)                         |
-  +-------------------------------------------------------------------------+
-\`\`\`
-
----
-
-## 📂 Repository Structure
-
-\`\`\`text
-.
-├── README.md                          # Main landing page & documentation
-├── docs/
-│   ├── PQC_OQS_Curl_PoC_Report_v3.docx # Full analytical report
-│   └── setup-architecture.png         # Architecture setup diagram
-├── pcaps/                             # Wireshark trace files (.pcapng)
-│   ├── mlkem768_mldsa65.pcapng
-│   ├── hybrid_x25519_mlkem768.pcapng
-│   └── frodo640_shake.pcapng
-└── scripts/                           # Execution scripts
-    ├── 01_generate_certs_mldsa65.ps1  # Generate ML-DSA-65 CA & Server certs
-    ├── 02_run_server_pure_pqc.ps1     # Launch server enforcing ML-KEM-768
-    ├── 02_run_server_hybrid.ps1       # Launch server with X25519MLKEM768
-    ├── 02_run_server_frodo.ps1        # Launch server with FrodoKEM
-    └── 03_run_client_tests.ps1        # Execute curl handshakes with master secret logging
-\`\`\`
-
----
-
 ## ⚡ Quick Start & Execution
 
 ### Prerequisites
